@@ -1,0 +1,10 @@
+SpeechRecognition==3.10.3
+PyAudio==0.2.14; sys_platform == "win32" or sys_platform == "darwin"
+pyttsx3==2.90
+notion-client==2.3.0
+google-api-python-client==2.149.0
+google-auth-oauthlib==1.2.1
+google-auth-httplib2==0.2.0
+python-dotenv==1.0.1
+streamlit==1.39.0
+requests==2.32.3

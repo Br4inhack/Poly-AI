@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    image: ai-assistant:latest
+    container_name: ai-assistant
+    ports:
+      - "${STREAMLIT_PORT:-8501}:8501"
+    env_file:
+      - .env
+    environment:
+      # Force vault path inside container; map host vault via volume below
+      - OBSIDIAN_VAULT_PATH=/vault
+    volumes:
+      # Google OAuth files: credentials.json is read-only; token.json is created/updated
+      - ./credentials.json:/app/credentials.json:ro
+      - ./token.json:/app/token.json
+      # Map your local Obsidian vault into the container at /vault
+      # Set OBSIDIAN_VAULT_PATH in .env to your absolute host path then compose will resolve it here
+      # On Windows, ensure drive sharing is enabled in Docker Desktop and use a full path like:
+      # OBSIDIAN_VAULT_PATH=C:\\Users\\<you>\\Obsidian Vault
+      - ${OBSIDIAN_VAULT_PATH}:/vault
+    restart: unless-stopped
